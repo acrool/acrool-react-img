@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {useRef} from 'react';
 import domtoimage from 'dom-to-image';
 import Github from './github.svg?react';
-import {Container, media} from '@acrool/react-grid';
+import {media} from '@acrool/react-grid';
 
 
 interface IProps {
@@ -12,10 +12,6 @@ interface IProps {
 
 }
 
-
-
-const name = 'Acrool React Img';
-const repositoryUrl = 'https://github.com/acrool/acrool-react-img';
 
 
 const Banner = ({
