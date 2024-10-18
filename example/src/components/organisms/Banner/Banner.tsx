@@ -43,10 +43,13 @@ const Banner = ({
 
 
     return <BannerRoot className={className}>
-        <a href={repositoryUrl} target="_blank" rel="noopener noreferrer">
-            <Github width={40} height={40}/>
-        </a>
-        <DownloadButton type="button" onClick={downloadBanner}>Download Banner</DownloadButton>
+
+        <InfoWrapper>
+            <A href={repositoryUrl} target="_blank" rel="noopener noreferrer">
+                <Github width={40} height={40}/>
+            </A>
+            <DownloadButton type="button" onClick={downloadBanner}>Download Banner</DownloadButton>
+        </InfoWrapper>
 
         <DownloadWrapper ref={ref}>
             <img src="/logo.svg" alt={name}/>
@@ -97,10 +100,24 @@ const DownloadWrapper = styled.div`
 `;
 
 
+const A = styled.a`
+  display: flex;
+  color: #fff;
+  font-size: 12px;
+  align-items: center;
+  gap: 10px;
+`;
+
+const InfoWrapper = styled.div`
+  background-color: #000;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+`;
 
 const DownloadButton = styled.button`
-  position: absolute;
-  right: 0;
+  color: #fff;
 `;
 
 
