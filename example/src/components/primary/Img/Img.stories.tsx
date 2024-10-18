@@ -21,7 +21,7 @@ const meta = {
     args: {
         w: '127px',
         h: '190px',
-        bgColor: 'rgba(105,105,105,0.12)',
+        bgColor: 'rgba(105,105,105,0.4)',
         isMaskVisible: false,
     },
 } satisfies Meta<typeof Img>;
