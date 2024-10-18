@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {Img} from '@acrool/react-img';
 import React from 'react';
 import {Flex} from '@acrool/react-grid';
-import {generatorArray} from '@acrool/js-utils/array';
+import {images} from './data';
 
 const meta = {
     title: 'Primary/Img',
@@ -21,8 +21,7 @@ const meta = {
     args: {
         w: '127px',
         h: '190px',
-        bgColor: '#696969',
-        src: 'https://fakeimg.pl/1000',
+        bgColor: 'rgba(105,105,105,0.12)',
         isMaskVisible: false,
     },
 } satisfies Meta<typeof Img>;
@@ -33,7 +32,9 @@ type Story = StoryObj<typeof meta>;
 
 
 export const Primary: Story = {
-    args: {},
+    args: {
+        src: images[0],
+    },
 };
 
 export const WithMask: Story = {
@@ -54,21 +55,20 @@ export const WithAspect: Story = {
 
 export const WithLazy: Story = {
     args: {
-        w: 127,
+        w: 600,
         h: false,
-        bgColor: '#696969',
         isMaskVisible: true,
-        aspect: '1/1',
-        // isLazy: true,
+        aspect: '2/1',
+        isLazy: true,
     },
     render: function Render(args) {
-        return <Flex className="gap-2 overflow-auto" style={{width: '100%'}}>
+        return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
 
-            {generatorArray(20).map((key, idx) => {
+            {images.map((imgUrl, idx) => {
                 return <Img
                     {...args}
-                    key={key}
-                    src={`https://fakeimg.pl/${idx + 200}/`}
+                    key={`img_${idx}`}
+                    src={imgUrl}
                 />;
             })}
 
