@@ -8,11 +8,6 @@ const meta = {
     component: Banner,
     parameters: {
         layout: 'centered',
-        docs: {
-            description: {
-                component: 'Img animation use transform'
-            },
-        },
     },
     // tags: ['autodocs'],
     argTypes: {},
