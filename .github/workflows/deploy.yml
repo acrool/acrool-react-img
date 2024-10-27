@@ -2,6 +2,8 @@ name: Deploy Storybook to Pages
 
 on:
   push:
+    branches:
+      - storybook
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
@@ -17,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Wait for npm publish
+        run: sleep 30
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,13 +36,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build Storybook
-        run: yarn build-storybook
-
-      - name: Install Wrangler
-        run: yarn global add wrangler
-
-      - name: Deploy to Cloudflare Pages
-        run: wrangler pages deploy ./storybook-static --project-name=acrool-react-img --branch main
+      - name: Build Storybook & Deploy to Cloudflare Pages
+        run: pages:deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
