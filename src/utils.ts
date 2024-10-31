@@ -14,3 +14,16 @@ export const getSizeValue = (value: TSizeValue) => {
     return String(value);
 };
 
+
+export const getRadiusValue = (value: TSizeValue) => {
+    if(value === true){
+        return '50%';
+    }
+    if(value === false){
+        return 'auto';
+    }
+    if(typeof value === 'number'){
+        return `${value}px`;
+    }
+    return String(value);
+};

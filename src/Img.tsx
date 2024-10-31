@@ -4,7 +4,7 @@ import {ReactNode} from 'react';
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
 import styles from './img.module.scss';
 import {clsx} from 'clsx';
-import {getSizeValue} from './utils';
+import {getRadiusValue, getSizeValue} from './utils';
 
 
 
@@ -13,6 +13,7 @@ interface IProps  {
     style?: CSS.Properties
     w?: TSizeValue
     h?: TSizeValue
+    r?: TSizeValue
     size?: 'cover' | 'contain' | string
     aspect?: string|number
     src?: string
@@ -38,6 +39,7 @@ const Img = ({
     style,
     w = '100%',
     h = 'auto',
+    r,
     aspect,
     size = 'cover',
     bgColor,
@@ -70,6 +72,7 @@ const Img = ({
             '--img-bg-color': bgColor,
             '--img-width': getSizeValue(w),
             '--img-height': getSizeValue(h),
+            '--img-radius': typeof r !== 'undefined' ? getRadiusValue(r) : undefined,
             '--img-aspect': aspect,
         } as CSS.Properties}
         data-lazy={isLazy ? '':undefined}

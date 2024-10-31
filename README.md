@@ -51,7 +51,9 @@ const Example = () => {
         src="https://acrool-react-picker.pages.dev/sample/1.jpg"
         w={200}
         h={200}
+        r={8}
         isLazy
+        isLazyMaskVisible
     />;
 };
 
@@ -68,4 +70,4 @@ There is also a example that you can play with it:
 
 ## License
 
-MIT © [imagine10255](https://github.com/imagine10255)
+MIT © [Acrool](https://github.com/acrool) & [Imagine](https://github.com/imagine10255)

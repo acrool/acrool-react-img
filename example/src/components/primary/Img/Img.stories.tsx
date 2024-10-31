@@ -21,8 +21,7 @@ const meta = {
     args: {
         w: '127px',
         h: '190px',
-        bgColor: 'rgba(105,105,105,0.4)',
-        isMaskVisible: false,
+        isLazyMaskVisible: false
     },
 } satisfies Meta<typeof Img>;
 
@@ -37,9 +36,30 @@ export const Primary: Story = {
     },
 };
 
-export const WithMask: Story = {
+export const WithSizeByNumber: Story = {
     args: {
-        isMaskVisible: true,
+        w: 127,
+        h: 190,
+        src: images[0],
+        isLazyMaskVisible: true,
+    },
+};
+
+export const WithRadius: Story = {
+    args: {
+        w: 127,
+        h: 190,
+        r: 10,
+        src: images[0],
+    },
+};
+
+export const WithRadiusByTrue: Story = {
+    args: {
+        w: 127,
+        h: 190,
+        r: true,
+        src: images[0],
     },
 };
 
@@ -48,8 +68,16 @@ export const WithAspect: Story = {
     args: {
         w: 127,
         h: false,
-        isMaskVisible: true,
+        isLazyMaskVisible: true,
+        src: images[0],
         aspect: '1/1'
+    },
+};
+
+
+export const WithBgColor: Story = {
+    args: {
+        bgColor: 'rgb(105,105,105)',
     },
 };
 
@@ -57,9 +85,33 @@ export const WithLazy: Story = {
     args: {
         w: 600,
         h: false,
-        isMaskVisible: true,
         aspect: '2/1',
         isLazy: true,
+        isLazyMaskVisible: false,
+    },
+    render: function Render(args) {
+        return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
+
+            {images.map((imgUrl, idx) => {
+                return <Img
+                    {...args}
+                    key={`img_${idx}`}
+                    src={imgUrl}
+                />;
+            })}
+
+        </Flex>;
+    },
+};
+
+
+export const WithLazyAndMask: Story = {
+    args: {
+        w: 600,
+        h: false,
+        aspect: '2/1',
+        isLazy: true,
+        isLazyMaskVisible: true,
     },
     render: function Render(args) {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
