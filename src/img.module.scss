@@ -18,7 +18,7 @@
 }
 
 .root {
-    --default-img-gradient-color: var(--img-gradient-from-color, rgb(239, 239, 239));
+    --default-img-gradient-color: var(--img-gradient-from-color, rgba(0, 0, 0, 0.05));
 
     --img-mask-move: 60px;
 
@@ -40,49 +40,53 @@
         display: block;
         position: absolute;
         left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background-color: var(--img-bg-color);
+    }
+    &:after{
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
         right: 0;
         top: 0;
         bottom: 0;
 
         background: no-repeat center center;
         background-size: var(--img-bg-size);
-        background-color: var(--img-bg-color);
         background-image: var(--img-bg-url);
 
         z-index: 0;
     }
 
     &[data-lazy]{
-        &:before{
-            opacity: 0;
-            filter: blur(4px);
+        &:after {
             transition: opacity .8s, filter .8s;
+            filter: blur(4px);
+            opacity: 0;
         }
-        &[data-fetching] {
-            &:before{
-                opacity: 1;
+
+        &[data-pending="false"] {
+            &:after {
                 filter: blur(0);
+                opacity: 1;
             }
         }
     }
 
 
     &[data-mask]{
-        &:after{
-            content: "";
+        &:before{
             opacity: 0.8;
-            display: block;
-            position: absolute;
-            left: 0;
-            top: 0;
             width: calc(100% + var(--img-mask-move));
-            height: 100%;
             background-image: linear-gradient(-60deg, var(--default-img-gradient-color) 25%, transparent 0, transparent 50%, var(--default-img-gradient-color) 0, var(--default-img-gradient-color) 75%, transparent 0, transparent);
             animation: img-progress-stripes 1.2s linear infinite;
             transform: translateX(0);
             background-repeat: repeat;
             background-size: 58px 100px;
-            z-index: 0;
         }
     }
 

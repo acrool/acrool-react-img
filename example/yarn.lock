@@ -14,10 +14,10 @@
   resolved "https://registry.yarnpkg.com/@acrool/react-grid/-/react-grid-5.2.5-alpha.0.tgz#7da9768ce8d95dd97a403b48ae47d590711a4e26"
   integrity sha512-9HVqXgyBwrOBOYltufu0ALXAiOXSnM4T7ch67nOh0GrDcFVKQO7NIw7wTIH/pgE8pNefDx3yWhOfisSQS4g+mg==
 
-"@acrool/react-hooks@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@acrool/react-hooks/-/react-hooks-1.0.2.tgz#414d27854c5a146e8093c7ade799dd57e8838945"
-  integrity sha512-72LzpQ+ITzHjsmj2r7Kvv2BPSFGq8r3BCbQEyNHVuPLLFdCbwitF9o+C+9g1fhsyaMd4yWNL6hbDRYZccFSQYg==
+"@acrool/react-hooks@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@acrool/react-hooks/-/react-hooks-1.0.3.tgz#920461edb01b9c2c9ca5291a2376e68fd94685d8"
+  integrity sha512-PpDYWjpd371BGvbkZQDNB2YbcYrX7sc6oA8HTG0Yc/c7KmvmdI2JmY1SU3WJa4nRaLblMmWbmNuHfCabqXyezQ==
 
 "@acrool/react-img@link:..":
   version "0.0.0"

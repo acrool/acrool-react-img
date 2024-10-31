@@ -49,14 +49,19 @@ const Img = ({
     children
 }: IProps) => {
 
-    const {imageRef, isFetching} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isFetching, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
     /**
      * 取得ImgBg變數
      */
     const getImgBgImageCSSVar = () => {
-        if(src && !isLazy){
-            return `url("${src}")`;
+        if(src){
+            if(!isLazy){
+                return `url("${src}")`;
+            }
+            if(_imageUrl){
+                return `url("${_imageUrl}")`;
+            }
         }
         return undefined;
     };
@@ -75,8 +80,9 @@ const Img = ({
             '--img-radius': typeof r !== 'undefined' ? getRadiusValue(r) : undefined,
             '--img-aspect': aspect,
         } as CSS.Properties}
+        data-pending={isLazy ? isPending: undefined}
         data-lazy={isLazy ? '':undefined}
-        data-mask={isLazy && isLazyMaskVisible && isFetching ? '':undefined}
+        data-mask={isLazy && isLazyMaskVisible && isPending ? '':undefined}
     >
         {children}
     </div>;

@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {Img} from '@acrool/react-img';
 import React from 'react';
 import {Flex} from '@acrool/react-grid';
-import {images} from './data';
+import {failImages, images} from './data';
 
 const meta = {
     title: 'Primary/Img',
@@ -117,6 +117,31 @@ export const WithLazyAndMask: Story = {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
 
             {images.map((imgUrl, idx) => {
+                return <Img
+                    {...args}
+                    key={`img_${idx}`}
+                    src={imgUrl}
+                />;
+            })}
+
+        </Flex>;
+    },
+};
+
+
+export const WithLazyFailAndMask: Story = {
+    args: {
+        w: 600,
+        h: false,
+        aspect: '2/1',
+        isLazy: true,
+        isLazyMaskVisible: true,
+        // bgColor: '#232323',
+    },
+    render: function Render(args) {
+        return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
+
+            {failImages.map((imgUrl, idx) => {
                 return <Img
                     {...args}
                     key={`img_${idx}`}
