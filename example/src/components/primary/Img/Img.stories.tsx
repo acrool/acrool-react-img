@@ -80,6 +80,19 @@ export const WithBgColor: Story = {
         bgColor: 'rgb(105,105,105)',
     },
 };
+export const WithChildContentByColor: Story = {
+    args: {
+        bgColor: 'rgb(105,105,105)',
+        children: 'This is acrool plugin'
+    },
+};
+export const WithChildContentByImage: Story = {
+    args: {
+        bgColor: 'rgb(105,105,105)',
+        src: images[2],
+        children: 'This is acrool plugin',
+    },
+};
 
 export const WithLazy: Story = {
     args: {
