@@ -17,7 +17,7 @@ interface IProps  {
     aspect?: string|number
     src?: string
     bgColor?: string
-    isMaskVisible?: boolean
+    isLazyMaskVisible?: boolean
     isLazy?: boolean
     children?: ReactNode
 }
@@ -42,12 +42,12 @@ const Img = ({
     size = 'cover',
     bgColor,
     src,
-    isMaskVisible = false,
+    isLazyMaskVisible = false,
     isLazy = false,
     children
 }: IProps) => {
 
-    const {imageRef} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isFetching} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
     /**
      * 取得ImgBg變數
@@ -65,7 +65,7 @@ const Img = ({
         className={clsx(styles.root, className)}
         style={{
             ...style,
-            '--bg-image': getImgBgImageCSSVar(),
+            '--img-bg-url': getImgBgImageCSSVar(),
             '--img-bg-size': size,
             '--img-bg-color': bgColor,
             '--img-width': getSizeValue(w),
@@ -73,7 +73,7 @@ const Img = ({
             '--img-aspect': aspect,
         } as CSS.Properties}
         data-lazy={isLazy ? '':undefined}
-        data-mask={isMaskVisible ? '':undefined}
+        data-mask={isLazy && isLazyMaskVisible && isFetching ? '':undefined}
     >
         {children}
     </div>;

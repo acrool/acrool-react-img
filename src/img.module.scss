@@ -47,7 +47,7 @@
         background: no-repeat center center;
         background-size: var(--img-bg-size);
         background-color: var(--img-bg-color);
-        background-image: var(--bg-image);
+        background-image: var(--img-bg-url);
 
         z-index: 0;
     }
@@ -58,8 +58,7 @@
             filter: blur(4px);
             transition: opacity .8s, filter .8s;
         }
-        &[data-status="done"],
-        &[data-status="fail"] {
+        &[data-fetching] {
             &:before{
                 opacity: 1;
                 filter: blur(0);
