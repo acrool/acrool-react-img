@@ -48,8 +48,7 @@ const Img = ({
     isLazy = false,
     children
 }: IProps) => {
-
-    const {imageRef, isPending, isFetching, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
     /**
      * 取得ImgBg變數
@@ -81,6 +80,7 @@ const Img = ({
             '--img-aspect': aspect,
         } as CSS.Properties}
         data-pending={isLazy ? isPending: undefined}
+        data-error={isError ? '': undefined}
         data-lazy={isLazy ? '':undefined}
         data-mask={isLazy && isLazyMaskVisible && isPending ? '':undefined}
     >

@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@acrool/react-hooks@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@acrool/react-hooks/-/react-hooks-1.0.3.tgz#920461edb01b9c2c9ca5291a2376e68fd94685d8"
-  integrity sha512-PpDYWjpd371BGvbkZQDNB2YbcYrX7sc6oA8HTG0Yc/c7KmvmdI2JmY1SU3WJa4nRaLblMmWbmNuHfCabqXyezQ==
+"@acrool/react-hooks@1.0.4-alpha.0":
+  version "1.0.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@acrool/react-hooks/-/react-hooks-1.0.4-alpha.0.tgz#1f0a04df4598fb7d049cde1194dd614c1deab816"
+  integrity sha512-OCCjhq0fNHJCySW+kR9dMWUr/DSUOx3u9NeLp2T+MAqJJRf28yOHGzkYhQKZNre8dyUM5RZhHLmJNVWe5HGovQ==
 
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"
