@@ -83,14 +83,14 @@ export const WithBgColor: Story = {
 export const WithChildContentByColor: Story = {
     args: {
         bgColor: 'rgb(105,105,105)',
-        children: 'This is acrool plugin'
+        children: <div>This is acrool plugin</div>,
     },
 };
 export const WithChildContentByImage: Story = {
     args: {
         bgColor: 'rgb(105,105,105)',
         src: images[2],
-        children: 'This is acrool plugin',
+        children: <div>This is acrool plugin</div>,
     },
 };
 

@@ -20,6 +20,9 @@
     --default-img-gradient-color: var(--img-gradient-from-color, rgba(0, 0, 0, 0.05));
 
     --img-mask-move: 60px;
+    --img-bg-color-index: 0;
+    --img-bg-img-index: 1;
+    --img-content-index: 2;
 
     width: var(--img-width);
     height: var(--img-height);
@@ -30,7 +33,7 @@
 
     > * {
         position: relative;
-        z-index: 0;
+        z-index: var(--img-content-index);
     }
 
 
@@ -42,7 +45,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: var(--img-bg-color-index);
         background-color: var(--img-bg-color);
     }
     &:after{
@@ -58,7 +61,7 @@
         background-size: var(--img-bg-size);
         background-image: var(--img-bg-url);
 
-        z-index: -1;
+        z-index: var(--img-bg-img-index);
     }
 
     &[data-lazy]{
