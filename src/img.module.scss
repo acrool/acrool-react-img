@@ -66,7 +66,7 @@
 
     &[data-lazy]{
         &:after {
-            transition: opacity .8s, filter .8s;
+            transition: opacity .4s, filter .4s;
             filter: blur(4px);
             opacity: 0;
         }
