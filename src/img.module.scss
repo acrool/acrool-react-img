@@ -20,9 +20,9 @@
     --default-img-gradient-color: var(--img-gradient-from-color, rgba(0, 0, 0, 0.05));
 
     --img-mask-move: 60px;
-    --img-bg-color-index: 0; // before
-    --img-bg-img-index: 1;   // after
-    --img-content-index: 2;  // content
+    --img-bg-color-index: -1; // before
+    --img-bg-img-index: -1;   // after
+    --img-content-index: 0;  // content
 
     width: var(--img-width);
     height: var(--img-height);
@@ -36,7 +36,7 @@
 
     > * {
         position: relative;
-        z-index: var(--img-content-index) !important;
+        z-index: var(--img-content-index);
     }
 
 
