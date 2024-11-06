@@ -25,6 +25,11 @@
 - Support lazy load image
 - Support mask animate
 
+## Why is the background image placed in :after, the background color placed in :before, and the content requires position & zIndex?
+
+If it is placed directly on itself, transparency 0 will be used during slow loading, which will cause all content to be hidden (such as background color, text content, reading bar). To avoid this problem, it must be layered.
+
+
 ## Install
 
 ```bash

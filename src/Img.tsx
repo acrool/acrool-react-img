@@ -18,7 +18,7 @@ interface IProps  {
     aspect?: string|number
     src?: string
     bgColor?: string
-    isLazyMaskVisible?: boolean
+    isLazyLoaderVisible?: boolean
     isLazy?: boolean
     children?: ReactNode
 }
@@ -44,7 +44,7 @@ const Img = ({
     size = 'cover',
     bgColor,
     src,
-    isLazyMaskVisible = false,
+    isLazyLoaderVisible = false,
     isLazy = false,
     children
 }: IProps) => {
@@ -82,7 +82,7 @@ const Img = ({
         data-pending={isLazy ? isPending: undefined}
         data-error={isError ? '': undefined}
         data-lazy={isLazy ? '':undefined}
-        data-mask={isLazy && isLazyMaskVisible && isPending ? '':undefined}
+        data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
     >
         {children}
     </div>;
