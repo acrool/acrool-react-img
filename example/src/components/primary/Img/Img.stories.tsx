@@ -21,7 +21,7 @@ const meta = {
     args: {
         w: '127px',
         h: '190px',
-        isLazyMaskVisible: false
+        isLazyLoaderVisible: false
     },
 } satisfies Meta<typeof Img>;
 
@@ -41,7 +41,17 @@ export const WithSizeByNumber: Story = {
         w: 127,
         h: 190,
         src: images[0],
-        isLazyMaskVisible: true,
+        isLazyLoaderVisible: true,
+    },
+};
+
+export const WithPosition: Story = {
+    args: {
+        w: 127,
+        h: 190,
+        position: 'bottom right',
+        src: images[0],
+        isLazyLoaderVisible: true,
     },
 };
 
@@ -68,7 +78,7 @@ export const WithAspect: Story = {
     args: {
         w: 127,
         h: false,
-        isLazyMaskVisible: true,
+        isLazyLoaderVisible: true,
         src: images[0],
         aspect: '1/1'
     },
@@ -100,7 +110,7 @@ export const WithLazy: Story = {
         h: false,
         aspect: '2/1',
         isLazy: true,
-        isLazyMaskVisible: false,
+        isLazyLoaderVisible: false,
     },
     render: function Render(args) {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
@@ -124,7 +134,7 @@ export const WithLazyAndMask: Story = {
         h: false,
         aspect: '2/1',
         isLazy: true,
-        isLazyMaskVisible: true,
+        isLazyLoaderVisible: true,
     },
     render: function Render(args) {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
@@ -148,7 +158,7 @@ export const WithLazyFailAndMask: Story = {
         h: false,
         aspect: '2/1',
         isLazy: true,
-        isLazyMaskVisible: true,
+        isLazyLoaderVisible: true,
         // bgColor: '#232323',
     },
     render: function Render(args) {

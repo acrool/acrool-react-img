@@ -18,6 +18,7 @@ interface IProps  {
     aspect?: string|number
     src?: string
     bgColor?: string
+    position?: string
     isLazyLoaderVisible?: boolean
     isLazy?: boolean
     children?: ReactNode
@@ -42,6 +43,7 @@ const Img = ({
     r,
     aspect,
     size = 'cover',
+    position,
     bgColor,
     src,
     isLazyLoaderVisible = false,
@@ -74,6 +76,7 @@ const Img = ({
             '--img-bg-url': getImgBgImageCSSVar(),
             '--img-bg-size': size,
             '--img-bg-color': bgColor,
+            '--img-bg-position': position,
             '--img-width': getSizeValue(w),
             '--img-height': getSizeValue(h),
             '--img-radius': typeof r !== 'undefined' ? getRadiusValue(r) : undefined,

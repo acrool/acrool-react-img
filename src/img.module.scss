@@ -61,6 +61,7 @@
         bottom: 0;
 
         background: no-repeat center center;
+        background-position: var(--img-bg-position, center center);
         background-size: var(--img-bg-size);
         background-image: var(--img-bg-url);
 
