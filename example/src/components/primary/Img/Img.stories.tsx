@@ -35,6 +35,13 @@ export const Primary: Story = {
         src: images[0],
     },
 };
+export const WithBigSize: Story = {
+    args: {
+        src: images[0],
+        w: 500,
+        h: 900,
+    },
+};
 
 export const WithSizeByNumber: Story = {
     args: {
@@ -90,12 +97,14 @@ export const WithBgColor: Story = {
         bgColor: 'rgb(105,105,105)',
     },
 };
+
 export const WithChildContentByColor: Story = {
     args: {
         bgColor: 'rgb(105,105,105)',
         children: <div>This is acrool plugin</div>,
     },
 };
+
 export const WithChildContentByImage: Story = {
     args: {
         bgColor: 'rgb(105,105,105)',
