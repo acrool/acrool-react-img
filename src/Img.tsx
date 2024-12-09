@@ -82,7 +82,7 @@ const Img = ({
             '--img-radius': typeof r !== 'undefined' ? getRadiusValue(r) : undefined,
             '--img-aspect': aspect,
         } as CSS.Properties}
-        data-pending={isLazy ? isPending: undefined}
+        data-pending={isLazy ? isPending && !isError: undefined}
         data-error={isError ? '': undefined}
         data-lazy={isLazy ? '':undefined}
         data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}

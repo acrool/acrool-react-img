@@ -178,7 +178,9 @@ export const WithLazyFailAndMask: Story = {
                     {...args}
                     key={`img_${idx}`}
                     src={imgUrl}
-                />;
+                >
+                    {imgUrl}
+                </Img>;
             })}
 
         </Flex>;
