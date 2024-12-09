@@ -73,7 +73,7 @@ const Img = ({
         className={clsx(styles.root, className)}
         style={{
             ...style,
-            '--img-bg-url': getImgBgImageCSSVar(),
+            backgroundImage: getImgBgImageCSSVar(),
             '--img-bg-size': size,
             '--img-bg-color': bgColor,
             '--img-bg-position': position,
