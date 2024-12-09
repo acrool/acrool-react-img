@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3-alpha.0](https://github.com/acrool/acrool-react-img/compare/v1.0.2...v1.0.3-alpha.0) (2024-12-09)
+
 ### [1.0.2](https://github.com/acrool/acrool-react-img/compare/v1.0.2-alpha.7...v1.0.2) (2024-12-09)
 
 ### [1.0.2-alpha.7](https://github.com/acrool/acrool-react-img/compare/v1.0.2-alpha.6...v1.0.2-alpha.7) (2024-12-09)
