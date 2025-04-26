@@ -15,9 +15,9 @@
     "url": "https://github.com/acrool/acrool-react-img.git"
   },
   "module": "./dist/acrool-react-img.es.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "browser": "./dist/acrool-react-img.es.js",
       "import": "./dist/acrool-react-img.es.js"
     },
