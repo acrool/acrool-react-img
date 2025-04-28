@@ -11,9 +11,13 @@ import {getRadiusValue, getSizeValue} from './utils';
 interface IProps  {
     className?: string
     style?: CSS.Properties
-    w?: TSizeValue
-    h?: TSizeValue
-    r?: TSizeValue
+    width?: TSizeValue
+    minWidth?: TSizeValue
+    maxWidth?: TSizeValue
+    height?: TSizeValue
+    minHeight?: TSizeValue
+    maxHeight?: TSizeValue
+    radius?: TSizeValue
     size?: 'cover' | 'contain' | string
     aspect?: string|number
     src?: string
@@ -30,17 +34,31 @@ interface IProps  {
  * @param className
  * @param style
  * @param width
+ * @param minWidth
+ * @param maxWidth
+ * @param height
+ * @param minHeight
+ * @param maxHeight
+ * @param radius
+ * @param aspect
  * @param size
+ * @param position
+ * @param bgColor
  * @param src
+ * @param isLazyLoaderVisible
  * @param isLazy
  * @param children
  */
 const Img = ({
     className,
     style,
-    w = '100%',
-    h = 'auto',
-    r,
+    width = '100%',
+    minWidth,
+    maxWidth,
+    height = 'auto',
+    minHeight,
+    maxHeight,
+    radius,
     aspect,
     size = 'cover',
     position,
@@ -77,9 +95,13 @@ const Img = ({
             '--img-bg-size': size,
             '--img-bg-color': bgColor,
             '--img-bg-position': position,
-            '--img-width': getSizeValue(w),
-            '--img-height': getSizeValue(h),
-            '--img-radius': typeof r !== 'undefined' ? getRadiusValue(r) : undefined,
+            '--img-width': getSizeValue(width),
+            '--img-min-width': typeof minWidth !== 'undefined' ? getSizeValue(minWidth): undefined,
+            '--img-max-width': typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth): undefined,
+            '--img-height': getSizeValue(height),
+            '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight): undefined,
+            '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight): undefined,
+            '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius) : undefined,
             '--img-aspect': aspect,
         } as CSS.Properties}
         data-pending={isLazy ? isPending && !isError: undefined}

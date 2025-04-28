@@ -19,8 +19,8 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {},
     args: {
-        w: '127px',
-        h: '190px',
+        width: '127px',
+        height: '190px',
         isLazyLoaderVisible: false
     },
 } satisfies Meta<typeof Img>;
@@ -38,15 +38,15 @@ export const Primary: Story = {
 export const WithBigSize: Story = {
     args: {
         src: images[0],
-        w: 500,
-        h: 900,
+        width: 500,
+        height: 900,
     },
 };
 
 export const WithSizeByNumber: Story = {
     args: {
-        w: 127,
-        h: 190,
+        width: 127,
+        height: 190,
         src: images[0],
         isLazyLoaderVisible: true,
     },
@@ -54,8 +54,8 @@ export const WithSizeByNumber: Story = {
 
 export const WithPosition: Story = {
     args: {
-        w: 127,
-        h: 190,
+        width: 127,
+        height: 190,
         position: 'bottom right',
         src: images[0],
         isLazyLoaderVisible: true,
@@ -64,18 +64,18 @@ export const WithPosition: Story = {
 
 export const WithRadius: Story = {
     args: {
-        w: 127,
-        h: 190,
-        r: 10,
+        width: 127,
+        height: 190,
+        radius: 10,
         src: images[0],
     },
 };
 
 export const WithRadiusByTrue: Story = {
     args: {
-        w: 127,
-        h: 190,
-        r: true,
+        width: 127,
+        height: 190,
+        radius: true,
         src: images[0],
     },
 };
@@ -83,8 +83,8 @@ export const WithRadiusByTrue: Story = {
 
 export const WithAspect: Story = {
     args: {
-        w: 127,
-        h: false,
+        width: 127,
+        height: false,
         isLazyLoaderVisible: true,
         src: images[0],
         aspect: '1/1'
@@ -115,8 +115,8 @@ export const WithChildContentByImage: Story = {
 
 export const WithLazy: Story = {
     args: {
-        w: 600,
-        h: false,
+        width: 600,
+        height: false,
         aspect: '2/1',
         isLazy: true,
         isLazyLoaderVisible: false,
@@ -139,8 +139,8 @@ export const WithLazy: Story = {
 
 export const WithLazyAndMask: Story = {
     args: {
-        w: 600,
-        h: false,
+        width: 600,
+        height: false,
         aspect: '2/1',
         isLazy: true,
         isLazyLoaderVisible: true,
@@ -163,8 +163,8 @@ export const WithLazyAndMask: Story = {
 
 export const WithLazyFailAndMask: Story = {
     args: {
-        w: 600,
-        h: false,
+        width: 600,
+        height: false,
         aspect: '2/1',
         isLazy: true,
         isLazyLoaderVisible: true,
