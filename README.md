@@ -57,9 +57,9 @@ import {generatorArray} from '@acrool/js-utils/array';
 const Example = () => {
     return <Img
         src="https://acrool-react-picker.pages.dev/sample/1.jpg"
-        w={200}
-        h={200}
-        r={8}
+        width={200}
+        height={200}
+        radius={8}
         isLazy
         isLazyMaskVisible
     />;
