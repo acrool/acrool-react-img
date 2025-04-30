@@ -1,4 +1,4 @@
-import {TSizeUnit, TSizeValue} from './types';
+import {TAspectValue, TSizeUnit, TSizeValue} from './types';
 
 
 export const getSizeValue = (value: TSizeValue, defaultUnit: TSizeUnit = 'px') => {
@@ -26,4 +26,11 @@ export const getRadiusValue = (value: TSizeValue, defaultUnit: TSizeUnit = 'px')
         return `${value}${defaultUnit}`;
     }
     return String(value);
+};
+
+export const getAspectValue = (value: TAspectValue) => {
+    if(value === true){
+        return 1;
+    }
+    return value;
 };

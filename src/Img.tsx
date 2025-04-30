@@ -4,7 +4,7 @@ import {ReactNode} from 'react';
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
 import styles from './img.module.scss';
 import {clsx} from 'clsx';
-import {getRadiusValue, getSizeValue} from './utils';
+import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
@@ -105,7 +105,7 @@ const Img = ({
             '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined,
             '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined,
             '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
-            '--img-aspect': aspect,
+            '--img-aspect': typeof aspect !== 'undefined' ? getAspectValue(aspect): undefined,
         } as CSS.Properties}
         data-pending={isLazy ? isPending && !isError: undefined}
         data-error={isError ? '': undefined}
