@@ -19,7 +19,7 @@ export interface IImgProps  {
     maxHeight?: TSizeValue
     radius?: TSizeValue
     size?: 'cover' | 'contain' | string
-    aspect?: string|number
+    aspect?: true|string|number
     src?: string
     bgColor?: string
     position?: string
