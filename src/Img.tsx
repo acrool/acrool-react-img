@@ -8,7 +8,7 @@ import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
-interface IProps  {
+export interface IImgProps  {
     className?: string
     style?: CSS.Properties
     width?: TSizeValue
@@ -70,7 +70,7 @@ const Img = ({
     isLazy = false,
     defaultUnit = 'px',
     children,
-}: IProps) => {
+}: IImgProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
     /**
