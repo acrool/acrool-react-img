@@ -1,4 +1,4 @@
-import {TSizeValue} from './types';
+import {TSizeUnit, TSizeValue} from './types';
 import CSS from 'csstype';
 import {ReactNode} from 'react';
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
@@ -25,6 +25,7 @@ interface IProps  {
     position?: string
     isLazyLoaderVisible?: boolean
     isLazy?: boolean
+    defaultUnit?: TSizeUnit
     children?: ReactNode
 }
 
@@ -47,6 +48,7 @@ interface IProps  {
  * @param src
  * @param isLazyLoaderVisible
  * @param isLazy
+ * @param defaultUnit
  * @param children
  */
 const Img = ({
@@ -66,7 +68,8 @@ const Img = ({
     src,
     isLazyLoaderVisible = false,
     isLazy = false,
-    children
+    defaultUnit = 'px',
+    children,
 }: IProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
@@ -95,13 +98,13 @@ const Img = ({
             '--img-bg-size': size,
             '--img-bg-color': bgColor,
             '--img-bg-position': position,
-            '--img-width': getSizeValue(width),
-            '--img-min-width': typeof minWidth !== 'undefined' ? getSizeValue(minWidth): undefined,
-            '--img-max-width': typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth): undefined,
-            '--img-height': getSizeValue(height),
-            '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight): undefined,
-            '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight): undefined,
-            '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius) : undefined,
+            '--img-width': getSizeValue(width, defaultUnit),
+            '--img-min-width': typeof minWidth !== 'undefined' ? getSizeValue(minWidth, defaultUnit): undefined,
+            '--img-max-width': typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth, defaultUnit): undefined,
+            '--img-height': getSizeValue(height, defaultUnit),
+            '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined,
+            '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined,
+            '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
             '--img-aspect': aspect,
         } as CSS.Properties}
         data-pending={isLazy ? isPending && !isError: undefined}

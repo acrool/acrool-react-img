@@ -1,7 +1,7 @@
-import {TSizeValue} from './types';
+import {TSizeUnit, TSizeValue} from './types';
 
 
-export const getSizeValue = (value: TSizeValue) => {
+export const getSizeValue = (value: TSizeValue, defaultUnit: TSizeUnit = 'px') => {
     if(value === true){
         return '100%';
     }
@@ -9,13 +9,13 @@ export const getSizeValue = (value: TSizeValue) => {
         return 'auto';
     }
     if(typeof value === 'number'){
-        return `${value}px`;
+        return `${value}${defaultUnit}`;
     }
     return String(value);
 };
 
 
-export const getRadiusValue = (value: TSizeValue) => {
+export const getRadiusValue = (value: TSizeValue, defaultUnit: TSizeUnit = 'px') => {
     if(value === true){
         return '50%';
     }
@@ -23,7 +23,7 @@ export const getRadiusValue = (value: TSizeValue) => {
         return 'auto';
     }
     if(typeof value === 'number'){
-        return `${value}px`;
+        return `${value}${defaultUnit}`;
     }
     return String(value);
 };
