@@ -1,14 +1,15 @@
-import {TSizeUnit, TSizeValue} from './types';
+import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
+import {clsx} from 'clsx';
 import CSS from 'csstype';
 import {ReactNode} from 'react';
-import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
+
 import styles from './img.module.scss';
-import {clsx} from 'clsx';
+import {TSizeUnit, TSizeValue} from './types';
 import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
-export interface IImgProps  {
+export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
     className?: string
     style?: CSS.Properties
     width?: TSizeValue
@@ -70,6 +71,7 @@ const Img = ({
     isLazy = false,
     defaultUnit = 'px',
     children,
+    ...rest
 }: IImgProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
@@ -111,6 +113,7 @@ const Img = ({
         data-error={isError ? '': undefined}
         data-lazy={isLazy ? '':undefined}
         data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
+        {...rest}
     >
         {children}
     </div>;
