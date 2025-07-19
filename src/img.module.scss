@@ -28,6 +28,7 @@
     height: var(--img-height);
     aspect-ratio: var(--img-aspect);
     border-radius: var(--img-radius);
+    flex: 0 0 auto;
 
     position: relative;
     overflow: hidden;
