@@ -1,7 +1,6 @@
-import {useLazyLoadBackground, useLazyLoadImage} from '@acrool/react-hooks/lazy';
+import {useLazyLoadImage} from '@acrool/react-hooks/lazy';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
-import {ReactNode} from 'react';
 
 import styles from './img.module.scss';
 import {TSizeUnit, TSizeValue} from './types';
@@ -28,7 +27,6 @@ export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
     isLazyLoaderVisible?: boolean
     isLazy?: boolean
     defaultUnit?: TSizeUnit
-    children?: ReactNode
 }
 
 
@@ -52,7 +50,6 @@ export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
  * @param isLazyLoaderVisible
  * @param isLazy
  * @param defaultUnit
- * @param children
  * @param rest
  */
 const Img = ({
@@ -74,7 +71,6 @@ const Img = ({
     isLazyLoaderVisible = false,
     isLazy = false,
     defaultUnit = 'px',
-    children,
     ...rest
 }: IImgProps) => {
     const {imageRef, isPending, isError} = useLazyLoadImage({enabled: isLazy, imageUrl: src});

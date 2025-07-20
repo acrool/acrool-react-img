@@ -98,20 +98,6 @@ export const WithBgColor: Story = {
     },
 };
 
-export const WithChildContentByColor: Story = {
-    args: {
-        bgColor: 'rgb(105,105,105)',
-        children: <div>This is acrool plugin</div>,
-    },
-};
-
-export const WithChildContentByImage: Story = {
-    args: {
-        bgColor: 'rgb(105,105,105)',
-        src: images[2],
-        children: <div>This is acrool plugin</div>,
-    },
-};
 
 export const WithLazy: Story = {
     args: {
@@ -178,9 +164,8 @@ export const WithLazyFailAndMask: Story = {
                     {...args}
                     key={`img_${idx}`}
                     src={imgUrl}
-                >
-                    {imgUrl}
-                </Img>;
+                    alt="image"
+                />;
             })}
 
         </Flex>;
