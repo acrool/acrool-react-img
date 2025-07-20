@@ -1,4 +1,4 @@
-import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
+import {useLazyLoadBackground, useLazyLoadImage} from '@acrool/react-hooks/lazy';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
 import {ReactNode} from 'react';
@@ -53,6 +53,7 @@ export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
  * @param isLazy
  * @param defaultUnit
  * @param children
+ * @param rest
  */
 const Img = ({
     className,
@@ -76,7 +77,7 @@ const Img = ({
     children,
     ...rest
 }: IImgProps) => {
-    const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isError} = useLazyLoadImage({enabled: isLazy, imageUrl: src});
 
     /**
      * 取得圖片 URL
@@ -85,9 +86,6 @@ const Img = ({
         if(src){
             if(!isLazy){
                 return src;
-            }
-            if(_imageUrl){
-                return _imageUrl;
             }
         }
         return undefined;
@@ -105,45 +103,14 @@ const Img = ({
         };
 
         // 處理 aspect ratio
-        if (typeof aspect !== 'undefined') {
-            const aspectValue = getAspectValue(aspect);
-            if (aspectValue !== false) {
-                baseStyle.aspectRatio = aspectValue as string;
-            }
-        }
+        baseStyle.aspectRatio = typeof aspect !== 'undefined' ? getAspectValue(aspect) as string: undefined;
 
         // 處理 min/max 尺寸 (這些需要通過 style 設置)
-        if (minWidth !== undefined) {
-            if (typeof minWidth === 'number') {
-                baseStyle.minWidth = `${minWidth}${defaultUnit}`;
-            } else if (typeof minWidth === 'string') {
-                baseStyle.minWidth = minWidth;
-            }
-        }
+        baseStyle.minWidth = typeof minWidth !== 'undefined' ? getSizeValue(minWidth, defaultUnit): undefined;
+        baseStyle.maxWidth = typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth, defaultUnit): undefined;
+        baseStyle.minHeight = typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined;
+        baseStyle.maxHeight = typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined;
 
-        if (maxWidth !== undefined) {
-            if (typeof maxWidth === 'number') {
-                baseStyle.maxWidth = `${maxWidth}${defaultUnit}`;
-            } else if (typeof maxWidth === 'string') {
-                baseStyle.maxWidth = maxWidth;
-            }
-        }
-
-        if (minHeight !== undefined) {
-            if (typeof minHeight === 'number') {
-                baseStyle.minHeight = `${minHeight}${defaultUnit}`;
-            } else if (typeof minHeight === 'string') {
-                baseStyle.minHeight = minHeight;
-            }
-        }
-
-        if (maxHeight !== undefined) {
-            if (typeof maxHeight === 'number') {
-                baseStyle.maxHeight = `${maxHeight}${defaultUnit}`;
-            } else if (typeof maxHeight === 'string') {
-                baseStyle.maxHeight = maxHeight;
-            }
-        }
 
         return {
             ...baseStyle,
@@ -151,69 +118,19 @@ const Img = ({
         };
     };
 
-    /**
-     * 取得原生 width 屬性
-     */
-    const getNativeWidth = () => {
-        if (width === undefined) return undefined;
-        if (typeof width === 'number') {
-            return width;
-        }
-        if (typeof width === 'string') {
-            // 如果是純數字字符串，轉換為數字
-            const numValue = parseFloat(width);
-            if (!isNaN(numValue) && width.match(/^\d+(\.\d+)?$/)) {
-                return numValue;
-            }
-            // 否則返回字符串（如 '100%'）
-            return width;
-        }
-        if (width === true) {
-            return '100%';
-        }
-        if (width === false) {
-            return 'auto';
-        }
-        return undefined;
-    };
-
-    /**
-     * 取得原生 height 屬性
-     */
-    const getNativeHeight = () => {
-        if (height === undefined) return undefined;
-        if (typeof height === 'number') {
-            return height;
-        }
-        if (typeof height === 'string') {
-            // 如果是純數字字符串，轉換為數字
-            const numValue = parseFloat(height);
-            if (!isNaN(numValue) && height.match(/^\d+(\.\d+)?$/)) {
-                return numValue;
-            }
-            // 否則返回字符串（如 '100%'）
-            return height;
-        }
-        if (height === true) {
-            return '100%';
-        }
-        if (height === false) {
-            return 'auto';
-        }
-        return undefined;
-    };
 
     return (
         <img
             ref={imageRef as React.Ref<HTMLImageElement>}
             src={getImageUrl()}
             alt={alt}
-            width={getNativeWidth()}
-            height={getNativeHeight()}
+            width={getSizeValue(width, defaultUnit)}
+            height={getSizeValue(height, defaultUnit)}
             className={clsx(styles.img, className)}
             style={getImageStyle()}
             data-pending={isLazy ? isPending && !isError: undefined}
             data-error={isError ? '': undefined}
+            data-lazy-src={isLazy && isPending ? src: undefined}
             data-lazy={isLazy ? '':undefined}
             data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
             {...rest}
