@@ -1,7 +1,6 @@
-import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
+import {useLazyLoadImage} from '@acrool/react-hooks/lazy';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
-import {ReactNode} from 'react';
 
 import styles from './img.module.scss';
 import {TSizeUnit, TSizeValue} from './types';
@@ -9,7 +8,7 @@ import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
-export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
+export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
     className?: string
     style?: CSS.Properties
     width?: TSizeValue
@@ -19,20 +18,20 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
     minHeight?: TSizeValue
     maxHeight?: TSizeValue
     radius?: TSizeValue
-    size?: 'cover' | 'contain' | string
+    objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
     aspect?: true|string|number
     src?: string
+    alt?: string
     bgColor?: string
     position?: string
     isLazyLoaderVisible?: boolean
     isLazy?: boolean
     defaultUnit?: TSizeUnit
-    children?: ReactNode
 }
 
 
 /**
- * 使用背景當圖片的元件
+ * 使用 img 標籤的圖片元件
  * @param className
  * @param style
  * @param width
@@ -43,14 +42,15 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
  * @param maxHeight
  * @param radius
  * @param aspect
- * @param size
+ * @param objectFit
  * @param position
  * @param bgColor
  * @param src
+ * @param alt
  * @param isLazyLoaderVisible
  * @param isLazy
  * @param defaultUnit
- * @param children
+ * @param rest
  */
 const Img = ({
     className,
@@ -63,60 +63,75 @@ const Img = ({
     maxHeight,
     radius,
     aspect,
-    size = 'cover',
+    objectFit = 'cover',
     position,
     bgColor,
     src,
+    alt = '',
     isLazyLoaderVisible = false,
     isLazy = false,
     defaultUnit = 'px',
-    children,
     ...rest
 }: IImgProps) => {
-    const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const {imageRef, isPending, isError} = useLazyLoadImage({enabled: isLazy, imageUrl: src});
 
     /**
-     * 取得ImgBg變數
+     * 取得圖片 URL
      */
-    const getImgBgImageCSSVar = () => {
+    const getImageUrl = () => {
         if(src){
             if(!isLazy){
-                return `url("${src}")`;
-            }
-            if(_imageUrl){
-                return `url("${_imageUrl}")`;
+                return src;
             }
         }
         return undefined;
     };
 
+    /**
+     * 取得樣式物件
+     */
+    const getImageStyle = () => {
+        const baseStyle: CSS.Properties = {
+            objectFit: objectFit,
+            objectPosition: position || 'center',
+            backgroundColor: bgColor,
+            borderRadius: typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
+        };
 
-    return <div
-        ref={imageRef}
-        className={clsx(styles.root, className)}
-        style={{
+        // 處理 aspect ratio
+        baseStyle.aspectRatio = typeof aspect !== 'undefined' ? getAspectValue(aspect) as string: undefined;
+
+        // 處理 min/max 尺寸 (這些需要通過 style 設置)
+        baseStyle.minWidth = typeof minWidth !== 'undefined' ? getSizeValue(minWidth, defaultUnit): undefined;
+        baseStyle.maxWidth = typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth, defaultUnit): undefined;
+        baseStyle.minHeight = typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined;
+        baseStyle.maxHeight = typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined;
+
+
+        return {
+            ...baseStyle,
             ...style,
-            backgroundImage: getImgBgImageCSSVar(),
-            '--img-bg-size': size,
-            '--img-bg-color': bgColor,
-            '--img-bg-position': position,
-            '--img-width': getSizeValue(width, defaultUnit),
-            '--img-min-width': typeof minWidth !== 'undefined' ? getSizeValue(minWidth, defaultUnit): undefined,
-            '--img-max-width': typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth, defaultUnit): undefined,
-            '--img-height': getSizeValue(height, defaultUnit),
-            '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined,
-            '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined,
-            '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
-            '--img-aspect': typeof aspect !== 'undefined' ? getAspectValue(aspect): undefined,
-        } as CSS.Properties}
-        data-pending={isLazy ? isPending && !isError: undefined}
-        data-error={isError ? '': undefined}
-        data-lazy={isLazy ? '':undefined}
-        data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
-        {...rest}
-    >
-        {children}
-    </div>;
+        };
+    };
+
+
+    return (
+        <img
+            ref={imageRef as React.Ref<HTMLImageElement>}
+            src={getImageUrl()}
+            alt={alt}
+            width={getSizeValue(width, defaultUnit)}
+            height={getSizeValue(height, defaultUnit)}
+            className={clsx(styles.img, className)}
+            style={getImageStyle()}
+            data-pending={isLazy ? isPending && !isError: undefined}
+            data-error={isError ? '': undefined}
+            data-lazy-src={isLazy && isPending ? src: undefined}
+            data-lazy={isLazy ? '':undefined}
+            data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
+            {...rest}
+        />
+    );
 };
 
 export default Img;

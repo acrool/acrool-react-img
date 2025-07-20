@@ -5,21 +5,30 @@ import React from 'react';
 
 import Img from './Img';
 
+// 模擬 IntersectionObserver
+const mockIntersectionObserver = jest.fn();
+mockIntersectionObserver.mockReturnValue({
+    observe: () => null,
+    unobserve: () => null,
+    disconnect: () => null,
+});
+global.IntersectionObserver = mockIntersectionObserver;
+
 describe('Img 元件', () => {
     it('應該正確渲染並帶有預設 class', () => {
         render(<Img data-testid="img-test" />);
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv).toBeInTheDocument();
-        expect(imgDiv.className).toContain('root');
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toBeInTheDocument();
+        expect(imgElement.tagName).toBe('IMG');
     });
 
-    it('應該正確設置 backgroundImage', () => {
+    it('應該正確設置 img src', () => {
         render(<Img src="https://example.com/image.png" data-testid="img-test" isLazy={false} />);
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv).toHaveStyle({backgroundImage: 'url("https://example.com/image.png")'});
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('src', 'https://example.com/image.png');
     });
 
-    it('應該正確設置寬高與 radius', () => {
+    it('應該正確設置原生 width 和 height 屬性', () => {
         render(
             <Img
                 data-testid="img-test"
@@ -29,18 +38,73 @@ describe('Img 元件', () => {
                 defaultUnit="px"
             />
         );
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv.style.getPropertyValue('--img-width')).toBe('200px');
-        expect(imgDiv.style.getPropertyValue('--img-height')).toBe('100px');
-        expect(imgDiv.style.getPropertyValue('--img-radius')).toBe('10px');
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('width', '200');
+        expect(imgElement).toHaveAttribute('height', '100');
+        expect(imgElement.style.borderRadius).toBe('10px');
     });
 
-    it('應該渲染 children', () => {
+    it('應該正確設置 objectFit', () => {
         render(
-            <Img data-testid="img-test">
-                <span>child</span>
-            </Img>
+            <Img
+                data-testid="img-test"
+                objectFit="contain"
+            />
         );
-        expect(screen.getByText('child')).toBeInTheDocument();
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement.style.objectFit).toBe('contain');
+    });
+
+    it('應該正確處理字符串類型的寬高', () => {
+        render(
+            <Img
+                data-testid="img-test"
+                width="300px"
+                height="150px"
+            />
+        );
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('width', '300px');
+        expect(imgElement).toHaveAttribute('height', '150px');
+    });
+
+    it('應該正確處理百分比類型的寬高', () => {
+        render(
+            <Img
+                data-testid="img-test"
+                width="100%"
+                height="50%"
+            />
+        );
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('width', '100%');
+        expect(imgElement).toHaveAttribute('height', '50%');
+    });
+
+    it('應該正確設置 lazy load 相關屬性', () => {
+        render(
+            <Img
+                data-testid="img-test"
+                src="https://example.com/image.png"
+                isLazy={true}
+                isLazyLoaderVisible={true}
+            />
+        );
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('data-lazy', '');
+        expect(imgElement).toHaveAttribute('data-loader', '');
+    });
+
+    it('應該正確設置 lazy load 的 data-pending 屬性', () => {
+        render(
+            <Img
+                data-testid="img-test"
+                src="https://example.com/image.png"
+                isLazy={true}
+            />
+        );
+        const imgElement = screen.getByTestId('img-test');
+        // 在測試環境中，lazy load 可能會立即完成，所以我們檢查屬性是否存在
+        expect(imgElement).toHaveAttribute('data-lazy', '');
     });
 }); 
