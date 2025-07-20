@@ -1,7 +1,7 @@
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
-import {ReactNode, useRef} from 'react';
+import {ReactNode} from 'react';
 
 import styles from './img.module.scss';
 import {TSizeUnit, TSizeValue} from './types';
@@ -77,7 +77,6 @@ const Img = ({
     ...rest
 }: IImgProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
-    const imgRef = useRef<HTMLImageElement>(null);
 
     /**
      * 取得圖片 URL
@@ -113,32 +112,7 @@ const Img = ({
             }
         }
 
-        // 使用原生 width/height 屬性
-        if (width !== undefined) {
-            if (typeof width === 'number') {
-                baseStyle.width = `${width}${defaultUnit}`;
-            } else if (typeof width === 'string') {
-                baseStyle.width = width;
-            } else if (width === true) {
-                baseStyle.width = '100%';
-            } else if (width === false) {
-                baseStyle.width = 'auto';
-            }
-        }
-
-        if (height !== undefined) {
-            if (typeof height === 'number') {
-                baseStyle.height = `${height}${defaultUnit}`;
-            } else if (typeof height === 'string') {
-                baseStyle.height = height;
-            } else if (height === true) {
-                baseStyle.height = '100%';
-            } else if (height === false) {
-                baseStyle.height = 'auto';
-            }
-        }
-
-        // 處理 min/max 尺寸
+        // 處理 min/max 尺寸 (這些需要通過 style 設置)
         if (minWidth !== undefined) {
             if (typeof minWidth === 'number') {
                 baseStyle.minWidth = `${minWidth}${defaultUnit}`;
@@ -177,11 +151,65 @@ const Img = ({
         };
     };
 
+    /**
+     * 取得原生 width 屬性
+     */
+    const getNativeWidth = () => {
+        if (width === undefined) return undefined;
+        if (typeof width === 'number') {
+            return width;
+        }
+        if (typeof width === 'string') {
+            // 如果是純數字字符串，轉換為數字
+            const numValue = parseFloat(width);
+            if (!isNaN(numValue) && width.match(/^\d+(\.\d+)?$/)) {
+                return numValue;
+            }
+            // 否則返回字符串（如 '100%'）
+            return width;
+        }
+        if (width === true) {
+            return '100%';
+        }
+        if (width === false) {
+            return 'auto';
+        }
+        return undefined;
+    };
+
+    /**
+     * 取得原生 height 屬性
+     */
+    const getNativeHeight = () => {
+        if (height === undefined) return undefined;
+        if (typeof height === 'number') {
+            return height;
+        }
+        if (typeof height === 'string') {
+            // 如果是純數字字符串，轉換為數字
+            const numValue = parseFloat(height);
+            if (!isNaN(numValue) && height.match(/^\d+(\.\d+)?$/)) {
+                return numValue;
+            }
+            // 否則返回字符串（如 '100%'）
+            return height;
+        }
+        if (height === true) {
+            return '100%';
+        }
+        if (height === false) {
+            return 'auto';
+        }
+        return undefined;
+    };
+
     return (
         <img
-            ref={imgRef}
+            ref={imageRef as React.Ref<HTMLImageElement>}
             src={getImageUrl()}
             alt={alt}
+            width={getNativeWidth()}
+            height={getNativeHeight()}
             className={clsx(styles.img, className)}
             style={getImageStyle()}
             data-pending={isLazy ? isPending && !isError: undefined}
