@@ -3,13 +3,13 @@ import {clsx} from 'clsx';
 import CSS from 'csstype';
 import {ReactNode} from 'react';
 
-import styles from './img.module.scss';
+import styles from './bgImg.module.scss';
 import {TSizeUnit, TSizeValue} from './types';
 import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
-export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
+export interface IBgImgProps extends React.HTMLAttributes<HTMLDivElement>  {
     className?: string
     style?: CSS.Properties
     width?: TSizeValue
@@ -52,7 +52,7 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
  * @param defaultUnit
  * @param children
  */
-const Img = ({
+const BgImg = ({
     className,
     style,
     width = '100%',
@@ -72,7 +72,7 @@ const Img = ({
     defaultUnit = 'px',
     children,
     ...rest
-}: IImgProps) => {
+}: IBgImgProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
 
     /**
@@ -93,7 +93,7 @@ const Img = ({
 
     return <div
         ref={imageRef}
-        className={clsx(styles.root, className)}
+        className={clsx(styles.bgImg, className)}
         style={{
             ...style,
             backgroundImage: getImgBgImageCSSVar(),
@@ -119,4 +119,4 @@ const Img = ({
     </div>;
 };
 
-export default Img;
+export default BgImg;
