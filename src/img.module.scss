@@ -1,47 +1,12 @@
-.root,
-.root *,
-.root *::before,
-.root *::after{
+.img {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     line-height: normal;
-}
-
-@keyframes img-progress-stripes{
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        transform: translate3d(-60px, 0, 0);
-    }
-}
-
-.root {
-    --default-img-gradient-color: var(--img-gradient-from-color, rgba(0, 0, 0, 0.05));
-
-    --img-mask-move: 60px;
-    --img-bg-color-index: -1; // before
-    --img-bg-img-index: -1;   // after
-    --img-content-index: 0;  // content
-
-    width: var(--img-width);
-    height: var(--img-height);
-    aspect-ratio: var(--img-aspect);
-    border-radius: var(--img-radius);
+    display: block;
     flex: 0 0 auto;
-
     position: relative;
     overflow: hidden;
     z-index: 0;
-    background: no-repeat center center;
-    background-position: var(--img-bg-position, center center);
-    background-size: var(--img-bg-size);
-    background-color: var(--img-bg-color);
-
-    > * {
-        position: relative;
-        z-index: var(--img-content-index);
-    }
 
     &[data-lazy]{
          transition: opacity .4s, filter .4s;
@@ -54,29 +19,35 @@
       }
     }
 
-    &:before{
-        content: "";
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: var(--img-bg-color-index);
-    }
-
-
     &[data-loader]{
+        position: relative;
+        
         &:before{
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             opacity: 0.8;
-            width: calc(100% + var(--img-mask-move));
-            background-image: linear-gradient(-60deg, var(--default-img-gradient-color) 25%, transparent 0, transparent 50%, var(--default-img-gradient-color) 0, var(--default-img-gradient-color) 75%, transparent 0, transparent);
+            width: calc(100% + 60px);
+            background-image: linear-gradient(-60deg, rgba(0, 0, 0, 0.05) 25%, transparent 0, transparent 50%, rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.05) 75%, transparent 0, transparent);
             animation: img-progress-stripes 1.2s linear infinite;
             transform: translateX(0);
             background-repeat: repeat;
             background-size: 58px 100px;
         }
     }
+}
 
+@keyframes img-progress-stripes{
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-60px, 0, 0);
+    }
 }
 

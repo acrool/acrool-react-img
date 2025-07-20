@@ -1,7 +1,7 @@
 import {useLazyLoadBackground} from '@acrool/react-hooks/lazy';
 import {clsx} from 'clsx';
 import CSS from 'csstype';
-import {ReactNode} from 'react';
+import {ReactNode, useRef} from 'react';
 
 import styles from './img.module.scss';
 import {TSizeUnit, TSizeValue} from './types';
@@ -9,7 +9,7 @@ import {getAspectValue, getRadiusValue, getSizeValue} from './utils';
 
 
 
-export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
+export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
     className?: string
     style?: CSS.Properties
     width?: TSizeValue
@@ -19,9 +19,10 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
     minHeight?: TSizeValue
     maxHeight?: TSizeValue
     radius?: TSizeValue
-    size?: 'cover' | 'contain' | string
+    objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
     aspect?: true|string|number
     src?: string
+    alt?: string
     bgColor?: string
     position?: string
     isLazyLoaderVisible?: boolean
@@ -32,7 +33,7 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
 
 
 /**
- * 使用背景當圖片的元件
+ * 使用 img 標籤的圖片元件
  * @param className
  * @param style
  * @param width
@@ -43,10 +44,11 @@ export interface IImgProps extends React.HTMLAttributes<HTMLDivElement>  {
  * @param maxHeight
  * @param radius
  * @param aspect
- * @param size
+ * @param objectFit
  * @param position
  * @param bgColor
  * @param src
+ * @param alt
  * @param isLazyLoaderVisible
  * @param isLazy
  * @param defaultUnit
@@ -63,10 +65,11 @@ const Img = ({
     maxHeight,
     radius,
     aspect,
-    size = 'cover',
+    objectFit = 'cover',
     position,
     bgColor,
     src,
+    alt = '',
     isLazyLoaderVisible = false,
     isLazy = false,
     defaultUnit = 'px',
@@ -74,49 +77,120 @@ const Img = ({
     ...rest
 }: IImgProps) => {
     const {imageRef, isPending, isError, _imageUrl} = useLazyLoadBackground({enabled: isLazy, imageUrl: src});
+    const imgRef = useRef<HTMLImageElement>(null);
 
     /**
-     * 取得ImgBg變數
+     * 取得圖片 URL
      */
-    const getImgBgImageCSSVar = () => {
+    const getImageUrl = () => {
         if(src){
             if(!isLazy){
-                return `url("${src}")`;
+                return src;
             }
             if(_imageUrl){
-                return `url("${_imageUrl}")`;
+                return _imageUrl;
             }
         }
         return undefined;
     };
 
+    /**
+     * 取得樣式物件
+     */
+    const getImageStyle = () => {
+        const baseStyle: CSS.Properties = {
+            objectFit: objectFit,
+            objectPosition: position || 'center',
+            backgroundColor: bgColor,
+            borderRadius: typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
+        };
 
-    return <div
-        ref={imageRef}
-        className={clsx(styles.root, className)}
-        style={{
+        // 處理 aspect ratio
+        if (typeof aspect !== 'undefined') {
+            const aspectValue = getAspectValue(aspect);
+            if (aspectValue !== false) {
+                baseStyle.aspectRatio = aspectValue as string;
+            }
+        }
+
+        // 使用原生 width/height 屬性
+        if (width !== undefined) {
+            if (typeof width === 'number') {
+                baseStyle.width = `${width}${defaultUnit}`;
+            } else if (typeof width === 'string') {
+                baseStyle.width = width;
+            } else if (width === true) {
+                baseStyle.width = '100%';
+            } else if (width === false) {
+                baseStyle.width = 'auto';
+            }
+        }
+
+        if (height !== undefined) {
+            if (typeof height === 'number') {
+                baseStyle.height = `${height}${defaultUnit}`;
+            } else if (typeof height === 'string') {
+                baseStyle.height = height;
+            } else if (height === true) {
+                baseStyle.height = '100%';
+            } else if (height === false) {
+                baseStyle.height = 'auto';
+            }
+        }
+
+        // 處理 min/max 尺寸
+        if (minWidth !== undefined) {
+            if (typeof minWidth === 'number') {
+                baseStyle.minWidth = `${minWidth}${defaultUnit}`;
+            } else if (typeof minWidth === 'string') {
+                baseStyle.minWidth = minWidth;
+            }
+        }
+
+        if (maxWidth !== undefined) {
+            if (typeof maxWidth === 'number') {
+                baseStyle.maxWidth = `${maxWidth}${defaultUnit}`;
+            } else if (typeof maxWidth === 'string') {
+                baseStyle.maxWidth = maxWidth;
+            }
+        }
+
+        if (minHeight !== undefined) {
+            if (typeof minHeight === 'number') {
+                baseStyle.minHeight = `${minHeight}${defaultUnit}`;
+            } else if (typeof minHeight === 'string') {
+                baseStyle.minHeight = minHeight;
+            }
+        }
+
+        if (maxHeight !== undefined) {
+            if (typeof maxHeight === 'number') {
+                baseStyle.maxHeight = `${maxHeight}${defaultUnit}`;
+            } else if (typeof maxHeight === 'string') {
+                baseStyle.maxHeight = maxHeight;
+            }
+        }
+
+        return {
+            ...baseStyle,
             ...style,
-            backgroundImage: getImgBgImageCSSVar(),
-            '--img-bg-size': size,
-            '--img-bg-color': bgColor,
-            '--img-bg-position': position,
-            '--img-width': getSizeValue(width, defaultUnit),
-            '--img-min-width': typeof minWidth !== 'undefined' ? getSizeValue(minWidth, defaultUnit): undefined,
-            '--img-max-width': typeof maxWidth !== 'undefined' ? getSizeValue(maxWidth, defaultUnit): undefined,
-            '--img-height': getSizeValue(height, defaultUnit),
-            '--img-min-height': typeof minHeight !== 'undefined' ? getSizeValue(minHeight, defaultUnit): undefined,
-            '--img-max-height': typeof maxHeight !== 'undefined' ? getSizeValue(maxHeight, defaultUnit): undefined,
-            '--img-radius': typeof radius !== 'undefined' ? getRadiusValue(radius, defaultUnit) : undefined,
-            '--img-aspect': typeof aspect !== 'undefined' ? getAspectValue(aspect): undefined,
-        } as CSS.Properties}
-        data-pending={isLazy ? isPending && !isError: undefined}
-        data-error={isError ? '': undefined}
-        data-lazy={isLazy ? '':undefined}
-        data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
-        {...rest}
-    >
-        {children}
-    </div>;
+        };
+    };
+
+    return (
+        <img
+            ref={imgRef}
+            src={getImageUrl()}
+            alt={alt}
+            className={clsx(styles.img, className)}
+            style={getImageStyle()}
+            data-pending={isLazy ? isPending && !isError: undefined}
+            data-error={isError ? '': undefined}
+            data-lazy={isLazy ? '':undefined}
+            data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
+            {...rest}
+        />
+    );
 };
 
 export default Img;

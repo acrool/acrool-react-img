@@ -8,15 +8,15 @@ import Img from './Img';
 describe('Img 元件', () => {
     it('應該正確渲染並帶有預設 class', () => {
         render(<Img data-testid="img-test" />);
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv).toBeInTheDocument();
-        expect(imgDiv.className).toContain('root');
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toBeInTheDocument();
+        expect(imgElement.tagName).toBe('IMG');
     });
 
-    it('應該正確設置 backgroundImage', () => {
+    it('應該正確設置 img src', () => {
         render(<Img src="https://example.com/image.png" data-testid="img-test" isLazy={false} />);
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv).toHaveStyle({backgroundImage: 'url("https://example.com/image.png")'});
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement).toHaveAttribute('src', 'https://example.com/image.png');
     });
 
     it('應該正確設置寬高與 radius', () => {
@@ -29,18 +29,20 @@ describe('Img 元件', () => {
                 defaultUnit="px"
             />
         );
-        const imgDiv = screen.getByTestId('img-test');
-        expect(imgDiv.style.getPropertyValue('--img-width')).toBe('200px');
-        expect(imgDiv.style.getPropertyValue('--img-height')).toBe('100px');
-        expect(imgDiv.style.getPropertyValue('--img-radius')).toBe('10px');
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement.style.width).toBe('200px');
+        expect(imgElement.style.height).toBe('100px');
+        expect(imgElement.style.borderRadius).toBe('10px');
     });
 
-    it('應該渲染 children', () => {
+    it('應該正確設置 objectFit', () => {
         render(
-            <Img data-testid="img-test">
-                <span>child</span>
-            </Img>
+            <Img
+                data-testid="img-test"
+                objectFit="contain"
+            />
         );
-        expect(screen.getByText('child')).toBeInTheDocument();
+        const imgElement = screen.getByTestId('img-test');
+        expect(imgElement.style.objectFit).toBe('contain');
     });
 }); 
