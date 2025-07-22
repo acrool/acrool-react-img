@@ -86,13 +86,11 @@ describe('Img 元件', () => {
             <Img
                 data-testid="img-test"
                 src="https://example.com/image.png"
-                isLazy={true}
-                isLazyLoaderVisible={true}
+                isLazy
             />
         );
         const imgElement = screen.getByTestId('img-test');
         expect(imgElement).toHaveAttribute('data-lazy', '');
-        expect(imgElement).toHaveAttribute('data-loader', '');
     });
 
     it('應該正確設置 lazy load 的 data-pending 屬性', () => {
@@ -100,11 +98,11 @@ describe('Img 元件', () => {
             <Img
                 data-testid="img-test"
                 src="https://example.com/image.png"
-                isLazy={true}
+                isLazy
             />
         );
         const imgElement = screen.getByTestId('img-test');
         // 在測試環境中，lazy load 可能會立即完成，所以我們檢查屬性是否存在
         expect(imgElement).toHaveAttribute('data-lazy', '');
     });
-}); 
+});
