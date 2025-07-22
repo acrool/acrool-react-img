@@ -18,36 +18,4 @@
          opacity: 1;
       }
     }
-
-    &[data-loader]{
-        position: relative;
-        
-        &:before{
-            content: "";
-            display: block;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.8;
-            width: calc(100% + 60px);
-            background-image: linear-gradient(-60deg, rgba(0, 0, 0, 0.05) 25%, transparent 0, transparent 50%, rgba(0, 0, 0, 0.05) 0, rgba(0, 0, 0, 0.05) 75%, transparent 0, transparent);
-            animation: img-progress-stripes 1.2s linear infinite;
-            transform: translateX(0);
-            background-repeat: repeat;
-            background-size: 58px 100px;
-        }
-    }
 }
-
-@keyframes img-progress-stripes{
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        transform: translate3d(-60px, 0, 0);
-    }
-}
-

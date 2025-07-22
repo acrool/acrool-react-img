@@ -24,7 +24,6 @@ export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
     alt?: string
     bgColor?: string
     position?: string
-    isLazyLoaderVisible?: boolean
     isLazy?: boolean
     defaultUnit?: TSizeUnit
 }
@@ -47,7 +46,6 @@ export interface IImgProps extends React.HTMLAttributes<HTMLImageElement>  {
  * @param bgColor
  * @param src
  * @param alt
- * @param isLazyLoaderVisible
  * @param isLazy
  * @param defaultUnit
  * @param rest
@@ -68,7 +66,6 @@ const Img = ({
     bgColor,
     src,
     alt = '',
-    isLazyLoaderVisible = false,
     isLazy = false,
     defaultUnit = 'px',
     ...rest
@@ -128,7 +125,6 @@ const Img = ({
             data-error={isError ? '': undefined}
             data-lazy-src={isLazy && isPending ? src: undefined}
             data-lazy={isLazy ? '':undefined}
-            data-loader={isLazy && isLazyLoaderVisible && isPending ? '':undefined}
             {...rest}
         />
     );
