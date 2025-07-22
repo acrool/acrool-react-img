@@ -1,13 +1,13 @@
 import {Flex} from '@acrool/react-grid';
-import {Img} from '@acrool/react-img';
+import {BgImg} from '@acrool/react-img';
 import type {Meta, StoryObj} from '@storybook/react';
 import React from 'react';
 
 import {failImages, images} from '../data';
 
 const meta = {
-    title: 'Primary/Img',
-    component: Img,
+    title: 'Primary/BgImg',
+    component: BgImg,
     parameters: {
         layout: 'centered',
         docs: {
@@ -23,7 +23,7 @@ const meta = {
         height: '190px',
         isLazyLoaderVisible: false
     },
-} satisfies Meta<typeof Img>;
+} satisfies Meta<typeof BgImg>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -98,6 +98,20 @@ export const WithBgColor: Story = {
     },
 };
 
+export const WithChildContentByColor: Story = {
+    args: {
+        bgColor: 'rgb(105,105,105)',
+        children: <div>This is acrool plugin</div>,
+    },
+};
+
+export const WithChildContentByImage: Story = {
+    args: {
+        bgColor: 'rgb(105,105,105)',
+        src: images[2],
+        children: <div>This is acrool plugin</div>,
+    },
+};
 
 export const WithLazy: Story = {
     args: {
@@ -111,7 +125,7 @@ export const WithLazy: Story = {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
 
             {images.map((imgUrl, idx) => {
-                return <Img
+                return <BgImg
                     {...args}
                     key={`img_${idx}`}
                     src={imgUrl}
@@ -135,7 +149,7 @@ export const WithLazyAndMask: Story = {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
 
             {images.map((imgUrl, idx) => {
-                return <Img
+                return <BgImg
                     {...args}
                     key={`img_${idx}`}
                     src={imgUrl}
@@ -160,12 +174,13 @@ export const WithLazyFailAndMask: Story = {
         return <Flex className="gap-2 overflow-auto" style={{width: '100%', marginLeft: 'calc(100vw - 500px)'}}>
 
             {failImages.map((imgUrl, idx) => {
-                return <Img
+                return <BgImg
                     {...args}
                     key={`img_${idx}`}
                     src={imgUrl}
-                    alt="image"
-                />;
+                >
+                    {imgUrl}
+                </BgImg>;
             })}
 
         </Flex>;

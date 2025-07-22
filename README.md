@@ -27,10 +27,11 @@
 - Support width, height, aspect
 - Support lazy load image
 - Support mask animate
+- Use native img tag with object-fit for better performance
 
-## Why is the background image placed in :after, the background color placed in :before, and the content requires position & zIndex?
+## Why use img tag instead of background image?
 
-If it is placed directly on itself, transparency 0 will be used during slow loading, which will cause all content to be hidden (such as background color, text content, reading bar). To avoid this problem, it must be layered.
+Using the native img tag with object-fit provides better performance and accessibility. It also avoids potential issues with background image layering and provides native image attributes like alt text for better SEO and accessibility.
 
 
 ## Install
@@ -61,7 +62,7 @@ const Example = () => {
         height={200}
         radius={8}
         isLazy
-        isLazyMaskVisible
+        isLazyLoaderVisible
     />;
 };
 
